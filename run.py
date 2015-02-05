@@ -17,7 +17,7 @@ parser.add_argument("--capabilities", help="Example: \
 args = parser.parse_args()
 
 # SET UP YOUR STATIC VARIABLES BELOW
-DEFAULT_BASE_URL = ""  # Set this
+DEFAULT_BASE_URL = "http://www.google.com"  # Set this
 
 if(args.base_url is not None):
     # Override the DEFAULT_BASE_URL value if passed in via the command line arg

@@ -22,7 +22,6 @@ source ~/.bash_profile
 
 Getting Started
 ----------
-Set up your DEFAULT_BASE_URL variable in run.py before anything. You can set it to http://www.google.com just to see the test work.
 Then Run the following to execute the tests
 ```
 python run.py
