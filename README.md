@@ -22,7 +22,8 @@ source ~/.bash_profile
 
 Getting Started
 ----------
-Run the following to execute the tests
+Set up your DEFAULT_BASE_URL variable in run.py before anything. You can set it to http://www.google.com just to see the test work.
+Then Run the following to execute the tests
 ```
 python run.py
 ```
@@ -31,6 +32,28 @@ Run the following to see all the possible arguments
 ```
 python run.py --help
 ```
+Examples
+---------
+To run with only in the desktop browsers:
+```
+python run.py --mobile
+```
+To run with only the in the desktop browsers:
+```
+python run.py --desktop
+```
+To override the base url you set in run.py
+```
+python run.py --base_url "http://google.com"
+````
+To only run one test
+```
+python run.py --test "example_a.py"
+````
+To only run in one browser
+```
+python run.py --capabilities "{'os_version': '7', 'browser_version': '8.0', 'os': 'Windows', 'resolution': '1024x768', 'browser': 'IE'}"
+````
 
 Notes
 ---------

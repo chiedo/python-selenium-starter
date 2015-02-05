@@ -3,14 +3,15 @@ from selenium import webdriver
 # from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import os
 import argparse
-import json
+import ast
 
 # Set up the command line arguments
 parser = argparse.ArgumentParser()
-parser.add_argument("--desktop", help="Make the tests only run tests on desktop computers.", action="store_true")
-parser.add_argument("--mobile", help="Make the tests only run tests on mobile devices.", action="store_true")
-parser.add_argument("--url", help="A way to override the DEFAULT_BASE_URL for your tests.",)
-parser.add_argument("--test", help="Only run one test as specified")
+parser.add_argument("--desktop", help="Make the tests only run tests on desktop computers. Boolean.",
+                    action="store_true")
+parser.add_argument("--mobile", help="Make the tests only run tests on mobile devices. Boolean.", action="store_true")
+parser.add_argument("--base_url", help="A way to override the DEFAULT_BASE_URL for your tests.",)
+parser.add_argument("--test", help="Only run one test as specified", default="all")
 parser.add_argument("--capabilities", help="Example: \
     \"{'browser': 'IE', 'browser_version': '8.0', 'os': 'Windows', 'os_version': '7', 'resolution': '1024x768'}\"")
 args = parser.parse_args()
@@ -18,9 +19,11 @@ args = parser.parse_args()
 # SET UP YOUR STATIC VARIABLES BELOW
 DEFAULT_BASE_URL = ""  # Set this
 
-if(args.url is not None):
+if(args.base_url is not None):
     # Override the DEFAULT_BASE_URL value if passed in via the command line arg
-    DEFAULT_BASE_URL = args.url  # Don't touch this
+    BASE_URL = args.base_url  # Don't touch this
+else:
+    BASE_URL = DEFAULT_BASE_URL
 
 
 # Grab the authentication variables from the environment
@@ -32,15 +35,18 @@ except KeyError:
     exit()
 
 
-if(DEFAULT_BASE_URL == ""):
+if(BASE_URL == ""):
     print "You need to set your DEFAULT_BASE_URL variable at the top of run.py."
     exit()
 
-# If the user passed --capabilities "{...}" then that will be the only platform tested on
 if(args.capabilities is not None):
-    desired_cap_list = [json.loads(args.capabilities)]
-# If the user did not pass the --capabilities argumen then run all the tests listed below
+    # If the user passed --capabilities "{...}" then that will be the only platform tested on
+
+    # convert the string into a python dictionary so it can be used in as a desired capability
+    desired_cap_list = [ast.literal_eval(args.capabilities)]
 else:
+    # If the user did not pass the --capabilities argumen then run all the tests listed below
+
     # This has been set as an array so that we can set multiple environments and run the tests below in a for loop
     # to repeat the tests for different operating systems. I have set a mobile capability list and
     # desktop capability list to allow the use of either or with a flag. More tests can easily be added. See the
@@ -99,11 +105,19 @@ for desired_cap in desired_cap_list:
         command_executor="http://%s:%s@hub.browserstack.com:80/wd/hub" % (selenium_username, selenium_value),
         desired_capabilities=desired_cap)
 
-    driver.get(DEFAULT_BASE_URL)
-    if "Google" not in driver.title:
-        raise Exception("Unable to load google page!")
-    elem = driver.find_element_by_name("q")
-    elem.send_keys("BrowerStack")
-    elem.submit()
-    print driver.title
+    # Test One
+    if(args.test is "all" or args.test == "example_a.py"):
+        from tests.example_a import ExampleA
+        test = ExampleA(driver, BASE_URL)
+        test.run()
+
+    # Test Two
+    if(args.test is "all" or args.test == "example_b.py"):
+        from tests.example_b import ExampleB
+        test = ExampleB(driver, BASE_URL)
+        test.run()
+
+    # More and more tests can be added in this exact way
+
+    # Clean Up
     driver.quit()
