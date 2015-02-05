@@ -2,9 +2,6 @@ Python-selenium-starter
 =========
 Starter set up for writing selenium tests with Python
 
-READ THIS FIRST (DO NOT IGNORE): 
-----------
-
 Installing Selenium
 ----------
 - Install pip first if needed obviously (google is your friend here)
