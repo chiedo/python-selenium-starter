@@ -13,6 +13,6 @@ class ExampleA(BaseTest):
         elem = self.driver.find_element_by_name("q")
         elem.send_keys("BrowerStack")
         elem.submit()
-        self.test_success("Example A")
         print self.driver.title
+        self.test_success("Example A")
         # No need to quit driver at the end of the test. The run.py file will handle that

@@ -6,7 +6,9 @@ class BaseTest(object):
 
     def test_success(self, test_name):
         print "%s ran successfully" % (test_name)
+        print "\n"
 
     def test_failure(self, test_name):
         # At this point other things can happen such as screenshots, etc.
         print "%s did not run successfully" % (test_name)
+        print "\n"
