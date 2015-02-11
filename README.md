@@ -26,6 +26,8 @@ Then Run the following to execute the tests
 ```
 python run.py
 ```
+You can add more tests by adding modules to the tests directory. Copy the structure in the examples and your tests
+should be executed automagically by the above.
 
 Run the following to see all the possible arguments
 ```

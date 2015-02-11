@@ -105,16 +105,22 @@ for desired_cap in desired_cap_list:
         command_executor="http://%s:%s@hub.browserstack.com:80/wd/hub" % (selenium_username, selenium_value),
         desired_capabilities=desired_cap)
 
-    # Test One
-    if(args.test is "all" or args.test == "example_a.py"):
-        from tests.example_a import Test
-        test = Test(driver, BASE_URL)
-        test.run()
+    tests_to_run = []
+    if(args.test == "all"):
+        # if args.test == "all" then dynamically set up that list from all the file names in the test folder
+        for file in [doc for doc in os.listdir("tests") if doc.endswith(".py") and doc != "__init__.py"
+                     and doc != "base_test.py"]:
+            tests_to_run.append("tests." + file.split(".")[0])  # remove the .py from the test name
+    else:
+        # Otherwise, just add the one tests specified when passing the command
+        tests_to_run = ["tests." + args.test.split(".")[0]]  # remove the .py from the test name
 
-    # Test Two
-    if(args.test is "all" or args.test == "example_b.py"):
-        from tests.example_b import Test
-        test = Test(driver, BASE_URL)
+    # Loop through all the tests_to_run and runs them
+    for test_to_run in tests_to_run:
+        # This dynamically imports all modules in the tests_to_run list. This allows me to import a module using
+        # a variable. This is fairly advanced and hard to follow for the beginner.
+        current_test = getattr(__import__(test_to_run, fromlist=["Test"]), "Test")
+        test = current_test(driver, BASE_URL)
         test.run()
 
     # More and more tests can be added in this exact way
