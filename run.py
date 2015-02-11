@@ -12,8 +12,8 @@ parser.add_argument("--desktop", help="Make the tests only run tests on desktop 
 parser.add_argument("--mobile", help="Make the tests only run tests on mobile devices. Boolean.", action="store_true")
 parser.add_argument("--base_url", help="A way to override the DEFAULT_BASE_URL for your tests.",)
 parser.add_argument("--test", help="Only run one test as specified", default="all")
-parser.add_argument("--capabilities", help="Example: \
-    \"{'browser': 'IE', 'browser_version': '8.0', 'os': 'Windows', 'os_version': '7', 'resolution': '1024x768'}\"")
+parser.add_argument("--capabilities", help="Example: \"{'browser': 'IE', 'browser_version': '8.0', 'os': 'Windows', " +
+                    "'os_version': '7', 'resolution': '1024x768'}\"")
 args = parser.parse_args()
 
 # SET UP YOUR STATIC VARIABLES BELOW
@@ -107,14 +107,14 @@ for desired_cap in desired_cap_list:
 
     # Test One
     if(args.test is "all" or args.test == "example_a.py"):
-        from tests.example_a import ExampleA
-        test = ExampleA(driver, BASE_URL)
+        from tests.example_a import Test
+        test = Test(driver, BASE_URL)
         test.run()
 
     # Test Two
     if(args.test is "all" or args.test == "example_b.py"):
-        from tests.example_b import ExampleB
-        test = ExampleB(driver, BASE_URL)
+        from tests.example_b import Test
+        test = Test(driver, BASE_URL)
         test.run()
 
     # More and more tests can be added in this exact way
