@@ -1,6 +1,9 @@
-Python-selenium-starter
+Python-browserstack-selenium-starter
 =========
-Starter set up for writing selenium tests with Python
+Starter set up for writing selenium tests with Python. The Goal is to make it easier to write and run tests
+using Selenium for multiple browsers and devices. With this repo, you should be able to just start writing your tests
+and not be concerned with the basic set up of your test framework. This is built for using browser stack but could
+easily be modified to not use browserstack with some basic coding.
 
 Installing Selenium
 ----------
