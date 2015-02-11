@@ -16,8 +16,8 @@ parser.add_argument("--capabilities", help="Example: \"{'browser': 'IE', 'browse
                     "'os_version': '7', 'resolution': '1024x768'}\"")
 args = parser.parse_args()
 
-# SET UP YOUR STATIC VARIABLES BELOW
-DEFAULT_BASE_URL = "http://www.google.com"  # Set this
+# IMPORT ALL VARIABLES
+from config import *
 
 if(args.base_url is not None):
     # Override the DEFAULT_BASE_URL value if passed in via the command line arg
@@ -53,25 +53,11 @@ else:
     # browser stack website to get more options.
     # The below tests IE8, IE9, IE10 and IE11 on windows and then chrome, safari and Firefox on a Mac. Pay attention to
     # the version numbers.
-    desktop_cap_list = [
-        {'browser': 'IE', 'browser_version': '8.0', 'os': 'Windows', 'os_version': '7', 'resolution': '1024x768'},
-        {'browser': 'IE', 'browser_version': '9.0', 'os': 'Windows', 'os_version': '7', 'resolution': '1024x768'},
-        {'browser': 'IE', 'browser_version': '10.0', 'os': 'Windows', 'os_version': '7', 'resolution': '1024x768'},
-        {'browser': 'IE', 'browser_version': '11.0', 'os': 'Windows', 'os_version': '7', 'resolution': '1024x768'},
-        {'browser': 'Chrome', 'browser_version': '39.0', 'os': 'OS X', 'os_version': 'Yosemite',
-         'resolution': '1024x768'},
-        {'browser': 'Firefox', 'browser_version': '35.0', 'os': 'OS X', 'os_version': 'Yosemite',
-         'resolution': '1024x768'},
-        {'browser': 'Safari', 'browser_version': '8.0', 'os': 'OS X', 'os_version': 'Yosemite',
-         'resolution': '1024x768'},
-    ]
+    desktop_cap_list = DESKTOP_CAP_LIST_CONFIGS
 
     # The below tests an iPhone 5 and Samsung Galaxy S5. If your Selenium Automate plan doesn't include Mobile, you will
     # Want to change the following to mobile_cap_list = []
-    mobile_cap_list = [
-        {'browserName': 'iPhone', 'platform': 'MAC', 'device': 'iPhone 5'},
-        {'browserName': 'android', 'platform': 'ANDROID', 'device': 'Samsung Galaxy S5'},
-    ]
+    mobile_cap_list = MOBILE_CAP_LIST_CONFIGS
 
     # Conditionally create the desired_cap_list list. Didn't use elseif statements to allow for more user error
     desired_cap_list = []

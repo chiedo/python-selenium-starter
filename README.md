@@ -28,6 +28,8 @@ python run.py
 ```
 You can add more tests by adding modules to the tests directory. Copy the structure in the examples and your tests
 should be executed automagically by the above.
+You will likely want to update the data in the config.py directory. But should not need to update anything in the
+run.py file unless you are applying a general fix.
 
 Run the following to see all the possible arguments
 ```
