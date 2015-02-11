@@ -25,6 +25,10 @@ source ~/.bash_profile
 
 Getting Started
 ----------
+Open a tab and run the following to start the local testing server. That will make sure you can still access the site via the correct IP address, etc.
+```
+./local_testing_binaries/osx/BrowserStackLocal $SELENIUM_AUTOMATE_VALUE localhost,3000,0
+```
 Then Run the following to execute the tests
 ```
 python run.py

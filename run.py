@@ -10,6 +10,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--desktop", help="Make the tests only run tests on desktop computers. Boolean.",
                     action="store_true")
 parser.add_argument("--mobile", help="Make the tests only run tests on mobile devices. Boolean.", action="store_true")
+parser.add_argument("--disable_local", help="Skip using browser stacks local testing option.", action="store_true")
 parser.add_argument("--base_url", help="A way to override the DEFAULT_BASE_URL for your tests.",)
 parser.add_argument("--test", help="Only run one test as specified", default="all")
 parser.add_argument("--capabilities", help="Example: \"{'browser': 'IE', 'browser_version': '8.0', 'os': 'Windows', " +
@@ -73,6 +74,9 @@ else:
 
 # This will run the the same test code in multiple environments
 for desired_cap in desired_cap_list:
+    # Automatically set browserstack to use local testing unless you tell it not to
+    if(args.disable_local is False):
+        desired_cap['browserstack.local'] = True
     # Output a line to show what enivornment is now being tested
     if("browser" in desired_cap):
         # For desktop
