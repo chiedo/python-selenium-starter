@@ -109,7 +109,5 @@ for desired_cap in desired_cap_list:
         test = current_test(driver, BASE_URL)
         test.run()
 
-    # More and more tests can be added in this exact way
-
     # Clean Up
     driver.quit()
