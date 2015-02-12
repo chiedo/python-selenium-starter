@@ -19,16 +19,6 @@ class BaseTest(object):
         self.base_url = base_url
         self.wait = WebDriverWait(driver, 10)
 
-    def passed(self, file_name):
-        """Print a generic message when a test has passed
-
-        Parameters
-        ----------
-        file_name : string
-            The name of the file that is currently being executed.
-        """
-        print("Passed: " + file_name)
-
     def failed(self, error_message):
         """Print a generic message when a test has failed, take a screenshot and end the test.
         Parameters
@@ -40,6 +30,16 @@ class BaseTest(object):
         self.take_screenshot()
         self.driver.quit()
         exit()
+
+    def passed(self, file_name):
+        """Print a generic message when a test has passed
+
+        Parameters
+        ----------
+        file_name : string
+            The name of the file that is currently being executed.
+        """
+        print("Passed: " + file_name)
 
     def take_screenshot(self):
         """Take a screenshot with a defined name based on the time and the browser"""
