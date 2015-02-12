@@ -7,14 +7,34 @@ import ast
 
 # Set up the command line arguments
 parser = argparse.ArgumentParser()
-parser.add_argument("--desktop", help="Make the tests only run tests on desktop computers. Boolean.",
+parser.add_argument("--desktop", help="(boolean) Make the tests only run tests on desktop computers.",
                     action="store_true")
-parser.add_argument("--mobile", help="Make the tests only run tests on mobile devices. Boolean.", action="store_true")
-parser.add_argument("--disable_local", help="Skip using browser stacks local testing option.", action="store_true")
+parser.add_argument("--mobile", help="(boolean) Make the tests only run tests on mobile devices.", action="store_true")
+parser.add_argument("--use_local", help="(boolean) Use the Local Browserstack selenium testing.",
+                    action="store_true")
 parser.add_argument("--base_url", help="A way to override the DEFAULT_BASE_URL for your tests.",)
 parser.add_argument("--test", help="Only run one test as specified", default="all")
+desired_cap_config_notes = " The available values you can pass to this command will depend on the values you have\
+                           set in your config.py file"
+parser.add_argument("--browser", help="Desktop: Only run tests on the given browser." +
+                    desired_cap_config_notes, default=False)
+parser.add_argument("--browser_version", help="Desktop: Only run tests on the given browser version." +
+                    desired_cap_config_notes, default=False)
+parser.add_argument("--os", help="Desktop: Only run tests on the given operating system." +
+                    desired_cap_config_notes, default=False)
+parser.add_argument("--os_version", help="Desktop: Only run tests on the given operating system version." +
+                    desired_cap_config_notes, default=False)
+parser.add_argument("--resolution", help="Desktop: Only run tests on the given screen resolution." +
+                    desired_cap_config_notes, default=False)
+parser.add_argument("--browserName", help="Mobile: Only run tests on the given the mobile browser name." +
+                    desired_cap_config_notes, default=False)
+parser.add_argument("--platform", help="Mobile: Only run tests on the given the mobile platform." +
+                    desired_cap_config_notes, default=False)
+parser.add_argument("--device", help="Mobile: Only run tests on the given the mobile device." +
+                    desired_cap_config_notes, default=False)
 parser.add_argument("--capabilities", help="Example: \"{'browser': 'IE', 'browser_version': '8.0', 'os': 'Windows', " +
-                    "'os_version': '7', 'resolution': '1024x768'}\"")
+                    "'os_version': '7', 'resolution': '1024x768'}\" Can be used as an alternative to adding many of" +
+                    "the arguments above such as mobile, desktop, browser, browser_version, etc.")
 args = parser.parse_args()
 
 # IMPORT ALL VARIABLES
@@ -72,10 +92,33 @@ else:
         # If no desktop or mobile argument has been passed, then run both the desktop and mobile tests
         desired_cap_list = desktop_cap_list + mobile_cap_list
 
+# If a specific filter arg was set via the command line, remove anything from the desired_capabilites list that does not
+# meet the requirement
+desired_cap_list_filters = [
+    "os",
+    "browser",
+    "browser_version",
+    "resolution",
+    "os_version",
+    "browserName",
+    "platform",
+    "device",
+]
+# Loops through the abev list to do this to prevent duplicate code. You will notice that append was used below, instead
+# of remove. Remove was not acting as hoped so to cut corners, I just did this with addition instead of subtraction
+# to the same affect.
+for the_filter in desired_cap_list_filters:
+    if(getattr(args, the_filter) is not False):
+        temp_list = desired_cap_list
+        desired_cap_list = []
+        for desired_cap in temp_list:
+            if(the_filter in desired_cap and desired_cap[the_filter] == getattr(args, the_filter)):
+                desired_cap_list.append(desired_cap)
+
 # This will run the the same test code in multiple environments
 for desired_cap in desired_cap_list:
-    # Automatically set browserstack to use local testing unless you tell it not to
-    if(args.disable_local is False):
+    # Use browser stack local testing if told to do so
+    if(args.use_local):
         desired_cap['browserstack.local'] = True
     # Output a line to show what enivornment is now being tested
     if("browser" in desired_cap):

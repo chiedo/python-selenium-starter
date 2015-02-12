@@ -29,20 +29,16 @@ Open a tab and run the following to start the local testing server. That will ma
 ```
 ./local_testing_binaries/osx/BrowserStackLocal $SELENIUM_AUTOMATE_VALUE localhost,3000,0
 ```
-Then Run the following to execute the tests
+Then Run the following to execute the tests and hook into the browser stack local testing server
 ```
-python run.py
+python run.py --use_local
 ```
 - You can add more tests by adding modules to the tests directory. Copy the structure in the examples and your tests
 should be executed automagically by the above.
 - You will likely want to update the data in the config.py file. But should not need to update anything in the
 run.py file unless you are applying a general fix to this repo that you plan to contribute..
 
-Run the following to see all the possible arguments
-```
-python run.py --help
-```
-Examples
+Examples (Be sure to set the use_local flag if needed. And obviously, these arguments can be chained)
 ---------
 To run with only in the desktop browsers:
 ```
@@ -64,6 +60,10 @@ To only run in one browser
 ```
 python run.py --capabilities "{'os_version': '7', 'browser_version': '8.0', 'os': 'Windows', 'resolution': '1024x768', 'browser': 'IE'}"
 ````
+To see more options
+```
+python run.py --help
+```
 
 Notes
 ---------
