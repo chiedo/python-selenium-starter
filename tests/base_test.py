@@ -1,5 +1,6 @@
 """A test class for others to inherit to prevent duplicate code."""
 
+from selenium.webdriver.support.ui import WebDriverWait
 import time
 
 
@@ -16,6 +17,7 @@ class BaseTest(object):
         """
         self.driver = driver
         self.base_url = base_url
+        self.wait = WebDriverWait(driver, 10)
 
     def passed(self, file_name):
         """Print a generic message when a test has passed
