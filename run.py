@@ -57,7 +57,7 @@ except KeyError:
 
 
 if(BASE_URL == ""):
-    print "You need to set your DEFAULT_BASE_URL variable at the top of run.py."
+    print "You need to set your DEFAULT_BASE_URL in config.py."
     exit()
 
 if(args.capabilities is not None):
