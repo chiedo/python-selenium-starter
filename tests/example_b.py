@@ -6,6 +6,6 @@ class Test(BaseTest):
         super(Test, self).__init__(driver, base_url)
 
     def run(self):
-        self.test_success("Example B")
+        self.passed("example_b.py")
         # No need to quit driver at the end of the test. The run.py file will
         # handle that

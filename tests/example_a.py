@@ -14,6 +14,6 @@ class Test(BaseTest):
         elem.send_keys("BrowerStack")
         elem.submit()
         print self.driver.title
-        self.test_success("Example A")
+        self.passed("example_a.py")
         # No need to quit driver at the end of the test. The run.py file will
         # handle that
