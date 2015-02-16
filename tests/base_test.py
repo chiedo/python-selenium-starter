@@ -36,11 +36,6 @@ class BaseTest(object):
 
     def passed(self):
         """Print a generic message when a test has passed
-
-        Parameters
-        ----------
-        file_name : string
-            The name of the file that is currently being executed.
         """
         print("Passed: " + self.module)
 
