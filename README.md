@@ -73,3 +73,4 @@ Notes
 ---------
 - You can see more details here https://www.browserstack.com/automate/python.
 - You will notice that your username and value are hard coded in those examples though. Just replace those areas with the environment variables we set up to make your code more shareable.
+- Local testing is VERY slow... Do as you wish
