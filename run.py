@@ -4,6 +4,9 @@ from selenium import webdriver
 import os
 import argparse
 import ast
+import time
+
+start_time = time.time()
 
 # Set up the command line arguments
 parser = argparse.ArgumentParser()
@@ -171,3 +174,8 @@ for desired_cap in desired_cap_list:
 
     # Clean Up
     driver.quit()
+
+    # Output the number of minutes the tests took to run
+    print "Time taken: "
+    print (time.time() - start_time) / 60
+    print " minutes"
