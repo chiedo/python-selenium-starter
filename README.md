@@ -33,6 +33,10 @@ Then Run the following to execute the tests and hook into the browser stack loca
 ```
 python run.py --use_local
 ```
+If you want to skip browserstack altogether and just run tests on your personal machine, then run the following instead. This option is much faster. Currently, this defaults to Firefox on your personal machine.
+```
+python run.py --browserstack_off
+```
 - You can add more tests by adding modules to the tests directory. Copy the structure in the examples and your tests
 should be executed automagically by the above.
 - You will likely want to update the data in the config.py file. But should not need to update anything in the
