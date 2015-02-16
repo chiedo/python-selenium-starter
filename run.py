@@ -48,14 +48,14 @@ if(args.base_url is not None):
 else:
     BASE_URL = DEFAULT_BASE_URL
 
-
-# Grab the authentication variables from the environment
-try:
-    selenium_username = os.environ['SELENIUM_AUTOMATE_USERNAME']
-    selenium_value = os.environ['SELENIUM_AUTOMATE_VALUE']
-except KeyError:
-    print "You need to set the environment variables for your username and value. See the README.md for details"
-    exit()
+if(args.browserstack_off is False):
+    # Grab the authentication variables from the environment
+    try:
+        selenium_username = os.environ['SELENIUM_AUTOMATE_USERNAME']
+        selenium_value = os.environ['SELENIUM_AUTOMATE_VALUE']
+    except KeyError:
+        print "You need to set the environment variables for your username and value. See the README.md for details"
+        exit()
 
 
 if(BASE_URL == ""):
