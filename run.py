@@ -153,8 +153,10 @@ for desired_cap in desired_cap_list:
         # This dynamically imports all modules in the tests_to_run list. This allows me to import a module using
         # a variable. This is fairly advanced and hard to follow for the beginner.
         current_test = getattr(__import__(test_to_run, fromlist=["Test"]), "Test")
-        test = current_test(driver, BASE_URL)
+        test = current_test(driver, BASE_URL, test_to_run)
         test.run()
+        # If it makes it this far, this means the test passed
+        test.passed()
 
     # Clean Up
     driver.quit()

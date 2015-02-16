@@ -5,7 +5,7 @@ import time
 
 
 class BaseTest(object):
-    def __init__(self, driver, base_url):
+    def __init__(self, driver, base_url, module):
         """Init
 
         Parameters
@@ -14,9 +14,12 @@ class BaseTest(object):
             The selenium web driver
         base_url : string
             The base url of the web page we will be visiting.
+        module
+            The module currently being executed
         """
         self.driver = driver
         self.base_url = base_url
+        self.module = module
         self.wait = WebDriverWait(driver, 10)
 
     def failed(self, error_message):
@@ -31,7 +34,7 @@ class BaseTest(object):
         self.driver.quit()
         exit()
 
-    def passed(self, file_name):
+    def passed(self):
         """Print a generic message when a test has passed
 
         Parameters
@@ -39,7 +42,7 @@ class BaseTest(object):
         file_name : string
             The name of the file that is currently being executed.
         """
-        print("Passed: " + file_name)
+        print("Passed: " + self.module)
 
     def take_screenshot(self):
         """Take a screenshot with a defined name based on the time and the browser"""
