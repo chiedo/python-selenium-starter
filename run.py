@@ -35,6 +35,8 @@ parser.add_argument("--device", help="Mobile: Only run tests on the given the mo
 parser.add_argument("--capabilities", help="Example: \"{'browser': 'IE', 'browser_version': '8.0', 'os': 'Windows', " +
                     "'os_version': '7', 'resolution': '1024x768'}\" Can be used as an alternative to adding many of" +
                     "the arguments above such as mobile, desktop, browser, browser_version, etc.")
+parser.add_argument("--browserstack_off", help="This will instead run tests locally on firefox. Most of " +
+                    "the above flags will be ignored", action="store_true")
 args = parser.parse_args()
 
 # IMPORT ALL VARIABLES
@@ -115,18 +117,24 @@ for the_filter in desired_cap_list_filters:
             if(the_filter in desired_cap and desired_cap[the_filter] == getattr(args, the_filter)):
                 desired_cap_list.append(desired_cap)
 
+# Completely override desired_cap list if the --browserstack_off argument was passed
+if(args.browserstack_off): desired_cap_list = [{"browser": "Firefox"}]
+
 # This will run the the same test code in multiple environments
 for desired_cap in desired_cap_list:
     # Use browser stack local testing if told to do so
     if(args.use_local):
         desired_cap['browserstack.local'] = True
     # Output a line to show what enivornment is now being tested
-    if("browser" in desired_cap):
-        # For desktop
+    if("browser" in desired_cap and args.browserstack_off is True):
+        # For desktop on localmachine using firefox
+        print "\nStarting Tests on %s on your local machine" % (desired_cap["browser"])
+    elif("browser" in desired_cap):
+        # For desktop on browserstack
         print "\nStarting Tests on %s %s on %s %s with a screen resolution of %s " % (desired_cap["browser"],
             desired_cap["browser_version"], desired_cap["os"], desired_cap["os_version"], desired_cap["resolution"])
     else:
-        # For mobile
+        # For mobile on browserstack
         print "\nStarting Tests on a %s" % (desired_cap["device"])
 
     print "--------------------------------------------------\n"
@@ -134,9 +142,12 @@ for desired_cap in desired_cap_list:
     # YOUR TEST CODE SHOULD START HERE
     # This should really just be calling test functions in test classes
     # you set up though, for the sake of modularity
-    driver = webdriver.Remote(
-        command_executor="http://%s:%s@hub.browserstack.com:80/wd/hub" % (selenium_username, selenium_value),
-        desired_capabilities=desired_cap)
+    if(args.browserstack_off is True):
+        driver = webdriver.Firefox()
+    else:
+        driver = webdriver.Remote(
+            command_executor="http://%s:%s@hub.browserstack.com:80/wd/hub" % (selenium_username, selenium_value),
+            desired_capabilities=desired_cap)
 
     tests_to_run = []
     if(args.test == "all"):
