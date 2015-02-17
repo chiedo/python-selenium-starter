@@ -42,4 +42,8 @@ class BaseTest(object):
     def take_screenshot(self):
         """Take a screenshot with a defined name based on the time and the browser"""
         millis = int(round(time.time() * 1000))
-        self.driver.save_screenshot("screenshots/" + self.driver.name + "-" + str(millis) + "-screenshots.png")
+        if(self.driver.name):
+            driver_name = self.driver.name
+        else:
+            driver_name = ""
+        self.driver.save_screenshot("screenshots/" + driver_name + "-" + str(millis) + "-screenshots.png")
