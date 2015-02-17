@@ -70,10 +70,6 @@ python run.py --browserstack --desktop
 ```
 To override the base url you set in run.py
 ```
-python run.py --base_url "http://google.com"
-````
-To only run in one browser
-```
 python run.py --browserstack --capabilities "{'os_version': '7', 'browser_version': '8.0', 'os': 'Windows', 'resolution': '1024x768', 'browser': 'IE'}"
 ````
 
