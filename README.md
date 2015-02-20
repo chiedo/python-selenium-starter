@@ -80,15 +80,19 @@ Browserstack Notes
 - Local testing is VERY slow... Do as you wish
 
 
-Speeding up your tests
+Speeding up your tests with browsermob (Will not work with browserstack)
 -----------
-To speed up your tests even more so, you can use browsermob-proxy to disable images and prevent the loading of external resources.
+To speed up your tests even more so, you can use browsermob-proxy to disable images and prevent the loading of other external resources.
 - Install browsermob-proxy with pip
 ```
 pip install browsermob-proxy
 ```
 - Set up your JAVA_HOME variable in your ~/.bashrc or ~/.bash_profile
-- To start your proxy, run the following (be patient, it is slow to start. Once you can visit 127.0.0.1:9090/proxy in your browser, it is ready)
+- To start your proxy, run the following (be patient, it is slow to start)
 ```
 ./browsermob-proxy/bin/browsermob-proxy
+```
+- Once you have done the above, you can run your tests through the proxy using the following and any other arguments you would like to use.
+```
+python run.py --proxy
 ```

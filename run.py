@@ -59,8 +59,10 @@ if(args.proxy):
     server.start()
     proxy = server.create_proxy()
 
-    # Set up the blacklist to block all images
-    proxy.blacklist("%s/.*" % (BASE_URL), 200)
+    # Set up the blacklist
+    for regex in PROXY_BLACKLIST:
+        proxy.blacklist(regex, 200)
+
     profile  = webdriver.FirefoxProfile()
     profile.set_proxy(proxy.selenium_proxy())
 
@@ -166,14 +168,9 @@ for desired_cap in desired_cap_list:
 
     # If the browserstack argument was passed, then dynamically set up the remote driver.
     if(args.browserstack):
-        if(desired_cap["browser"] == "Firefox" and args.proxy):
-            driver = webdriver.Remote(
-                command_executor="http://%s:%s@hub.browserstack.com:80/wd/hub" % (selenium_username, selenium_value),
-                desired_capabilities=desired_cap, browser_profile=profile)
-        else:
-            driver = webdriver.Remote(
-                command_executor="http://%s:%s@hub.browserstack.com:80/wd/hub" % (selenium_username, selenium_value),
-                desired_capabilities=desired_cap)
+        driver = webdriver.Remote(
+            command_executor="http://%s:%s@hub.browserstack.com:80/wd/hub" % (selenium_username, selenium_value),
+            desired_capabilities=desired_cap)
     # Otherwise, just run firefox locally.
     else:
         if(args.proxy):

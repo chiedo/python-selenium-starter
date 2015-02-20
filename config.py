@@ -26,3 +26,13 @@ MOBILE_CAP_LIST_CONFIGS = [
     # {'browserName': 'iPhone', 'platform': 'MAC', 'device': 'iPhone 5'},
     # {'browserName': 'android', 'platform': 'ANDROID', 'device': 'Samsung Galaxy S5'},
 ]
+
+# URLs to black list. This will speed up tests drastically. These are all regular expressions. Add other
+# URLs that you want to block. Will not work with browserstack.
+PROXY_BLACKLIST = [
+    # all images
+    "(.)*\.jpg.*",
+    "(.)*\.png.*",
+    "(.)*\.jpeg.*",
+    "(.)*\.gif.*",
+]
