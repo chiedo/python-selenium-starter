@@ -39,6 +39,8 @@ parser.add_argument("--capabilities", help="Example: \"{'browser': 'IE', 'browse
                     "the arguments above such as mobile, desktop, browser, browser_version, etc.")
 parser.add_argument("--browserstack", help="This will make tests execute on the browserstack platform instead" +
                     "the above flags will be ignored", action="store_true")
+parser.add_argument("--proxy", help="This will make the tests attempt to run through your browsermob proxy",
+                    action="store_true")
 args = parser.parse_args()
 
 # IMPORT ALL VARIABLES
@@ -49,6 +51,23 @@ if(args.base_url is not None):
     BASE_URL = args.base_url  # Don't touch this
 else:
     BASE_URL = DEFAULT_BASE_URL
+
+# Set up the browsermob proxy if the argument is passed
+if(args.proxy):
+    import requests
+    proxy_base = "http://127.0.0.1:9090/proxy"
+    # This sets up the proxy if it does not already exist
+    requests.post(proxy_base, params={'port': 9092})
+
+    # Set up the proxy and the black list, etc.
+
+    # Make sure firefox knows of the proxy
+    profile = webdriver.FirefoxProfile()
+    profile.set_preference("network.proxy.type", 1)
+    profile.set_preference("network.proxy.http", "127.0.0.1")
+    profile.set_preference("network.proxy.http_port", "9092")
+    profile.update_preferences()
+
 
 if(args.browserstack):
     # Grab the authentication variables from the environment
@@ -151,12 +170,20 @@ for desired_cap in desired_cap_list:
 
     # If the browserstack argument was passed, then dynamically set up the remote driver.
     if(args.browserstack):
-        driver = webdriver.Remote(
-            command_executor="http://%s:%s@hub.browserstack.com:80/wd/hub" % (selenium_username, selenium_value),
-            desired_capabilities=desired_cap)
+        if(desired_cap["browser"] == "Firefox" and args.proxy):
+            driver = webdriver.Remote(
+                command_executor="http://%s:%s@hub.browserstack.com:80/wd/hub" % (selenium_username, selenium_value),
+                desired_capabilities=desired_cap, browser_profile=profile)
+        else:
+            driver = webdriver.Remote(
+                command_executor="http://%s:%s@hub.browserstack.com:80/wd/hub" % (selenium_username, selenium_value),
+                desired_capabilities=desired_cap)
     # Otherwise, just run firefox locally.
     else:
-        driver = webdriver.Firefox()
+        if(args.proxy):
+            driver = webdriver.Firefox(firefox_profile=profile)
+        else:
+            driver = webdriver.Firefox()
 
     tests_to_run = []
     if(args.test == "all"):

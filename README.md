@@ -78,3 +78,21 @@ Browserstack Notes
 - For more browserstack options, you can see more details here https://www.browserstack.com/automate/python.
 - You will notice that your username and value are hard coded in those examples though. Just replace those areas with the environment variables we set up to make your code more shareable.
 - Local testing is VERY slow... Do as you wish
+
+
+Speeding up your tests
+-----------
+To speed up your tests even more so, you can use browsermob-proxy to disable images and prevent the loading of external resources.
+- Install browsermob-proxy with pip
+```
+pip install browsermob-proxy
+```
+- Set up your JAVA_HOME variable in your ~/.bashrc or ~/.bash_profile
+- To start your proxy, run the following (be patient, it is slow to start. Once you can visit 127.0.0.1:9090/proxy in your browser, it is ready)
+```
+./browsermob-proxy/bin/browsermob-proxy -port 9090
+```
+- To connect browserstack to the proxy, you have to be using the browser stack local option and when you run the following instead to set up your local server
+```
+./local_testing_binaries/osx/BrowserStackLocal $SELENIUM_AUTOMATE_VALUE localhost,3000,0 -forcelocal -vv -proxyHost "127.0.0.1" -proxyPort "9090"
+```
