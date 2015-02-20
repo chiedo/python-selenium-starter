@@ -39,8 +39,10 @@ parser.add_argument("--capabilities", help="Example: \"{'browser': 'IE', 'browse
                     "the arguments above such as mobile, desktop, browser, browser_version, etc.")
 parser.add_argument("--browserstack", help="This will make tests execute on the browserstack platform instead" +
                     "the above flags will be ignored", action="store_true")
-parser.add_argument("--proxy", help="This will make the tests attempt to run through your browsermob proxy",
-                    action="store_true")
+parser.add_argument("--proxy", help="This will make the tests attempt to run through your browsermob proxy" +
+                    ". Wil not work with Browserstack.", action="store_true")
+parser.add_argument("--phantom", help="Will run tests via Phantom JS which will be a little faster. Will not work" +
+                    " with Browserstack.", action="store_true")
 args = parser.parse_args()
 
 # IMPORT ALL VARIABLES
@@ -141,7 +143,10 @@ if(args.browserstack):
 # If the --browserstack argument was not passed, just set one element in the desired_cap_list for the sake
 # of using the same logic below. When looping through the elements of the desired_cap_list
 else:
-    desired_cap_list = [{"browser": "Firefox"}]
+    if(args.phantom):
+        desired_cap_list = [{"browser": "PhantomJs"}]
+    else:
+        desired_cap_list = [{"browser": "Firefox"}]
 
 # This will run the the same test code in multiple environments
 for desired_cap in desired_cap_list:
@@ -175,6 +180,8 @@ for desired_cap in desired_cap_list:
     else:
         if(args.proxy):
             driver = webdriver.Firefox(firefox_profile=profile)
+        elif(args.phantom):
+            driver = webdriver.PhantomJS()
         else:
             driver = webdriver.Firefox()
 

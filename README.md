@@ -19,9 +19,13 @@ run.py file unless you are applying a general fix to this repo that you plan to 
 
 General Examples
 ---------
-To run all tests
+To run all tests on Firefox
 ```
 python run.py
+```
+To run all tests with headless mode to speed thing up a bit, although less reliable. This will not work with browserstack. Obviously, you will need to first install PhantomJs for this to work. You can use a mac with home brew.
+```
+python run.py --phantom
 ```
 To override the base url you set in run.py
 ```
@@ -80,7 +84,7 @@ Browserstack Notes
 - Local testing is VERY slow... Do as you wish
 
 
-Speeding up your tests with browsermob (Will not work with browserstack)
+Speeding up Firefox tests with browsermob (Will not work with browserstack)
 -----------
 To speed up your tests even more so, you can use browsermob-proxy to disable images and prevent the loading of other external resources.
 - Install browsermob-proxy with pip
