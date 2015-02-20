@@ -16,13 +16,13 @@ DESKTOP_CAP_LIST_CONFIGS = [
      'resolution': '1024x768'},
     {'browser': 'Firefox', 'browser_version': '35.0', 'os': 'OS X', 'os_version': 'Yosemite',
      'resolution': '1024x768'},
-    {'browser': 'Safari', 'browser_version': '8.0', 'os': 'OS X', 'os_version': 'Yosemite',
-     'resolution': '1024x768'},
+    # Safari is not well supported with selenium
+    # {'browser': 'Safari', 'browser_version': '8.0', 'os': 'OS X', 'os_version': 'Yosemite',
+    # 'resolution': '1024x768'},
 ]
 
-# The below tests an iPhone 5 and Samsung Galaxy S5. If your Selenium Automate plan doesn't include Mobile, you will
-# Want to change the following to mobile_cap_list = []
+# The below tests an iPhone 5 and Samsung Galaxy S5
 MOBILE_CAP_LIST_CONFIGS = [
-    {'browserName': 'iPhone', 'platform': 'MAC', 'device': 'iPhone 5'},
-    {'browserName': 'android', 'platform': 'ANDROID', 'device': 'Samsung Galaxy S5'},
+    # {'browserName': 'iPhone', 'platform': 'MAC', 'device': 'iPhone 5'},
+    # {'browserName': 'android', 'platform': 'ANDROID', 'device': 'Samsung Galaxy S5'},
 ]
