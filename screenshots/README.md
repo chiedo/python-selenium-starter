@@ -1,0 +1,2 @@
+- Screenshots will automatically be added to this directory when taken by your tests.
+- You will probably want to delete the generated screenshots periodically.
