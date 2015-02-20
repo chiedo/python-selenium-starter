@@ -90,9 +90,5 @@ pip install browsermob-proxy
 - Set up your JAVA_HOME variable in your ~/.bashrc or ~/.bash_profile
 - To start your proxy, run the following (be patient, it is slow to start. Once you can visit 127.0.0.1:9090/proxy in your browser, it is ready)
 ```
-./browsermob-proxy/bin/browsermob-proxy -port 9090
-```
-- To connect browserstack to the proxy, you have to be using the browser stack local option and when you run the following instead to set up your local server
-```
-./local_testing_binaries/osx/BrowserStackLocal $SELENIUM_AUTOMATE_VALUE localhost,3000,0 -forcelocal -vv -proxyHost "127.0.0.1" -proxyPort "9090"
+./browsermob-proxy/bin/browsermob-proxy
 ```

@@ -54,19 +54,15 @@ else:
 
 # Set up the browsermob proxy if the argument is passed
 if(args.proxy):
-    import requests
-    proxy_base = "http://127.0.0.1:9090/proxy"
-    # This sets up the proxy if it does not already exist
-    requests.post(proxy_base, params={'port': 9092})
+    from browsermobproxy import Server
+    server = Server("browsermob-proxy/bin/browsermob-proxy")
+    server.start()
+    proxy = server.create_proxy()
 
-    # Set up the proxy and the black list, etc.
-
-    # Make sure firefox knows of the proxy
-    profile = webdriver.FirefoxProfile()
-    profile.set_preference("network.proxy.type", 1)
-    profile.set_preference("network.proxy.http", "127.0.0.1")
-    profile.set_preference("network.proxy.http_port", "9092")
-    profile.update_preferences()
+    # Set up the blacklist to block all images
+    proxy.blacklist("%s/.*" % (BASE_URL), 200)
+    profile  = webdriver.FirefoxProfile()
+    profile.set_proxy(proxy.selenium_proxy())
 
 
 if(args.browserstack):
@@ -228,3 +224,5 @@ for desired_cap in desired_cap_list:
 
     # Clean Up
     driver.quit()
+
+if(args.proxy): server.stop()
