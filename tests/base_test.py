@@ -29,7 +29,7 @@ class BaseTest(object):
         error_message : string
             A message describing what went wrong with the test.
         """
-        print("faled: " + self.module  + ": " + error_message)
+        print("Failed: " + self.module  + ": " + error_message)
         self.take_screenshot()
         self.driver.quit()
         exit()
