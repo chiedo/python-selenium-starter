@@ -40,10 +40,10 @@ class BaseTest(object):
 
         Parameters
         ----------
-        assertion : lambda
+        function : lambda
             A lambda function that should at some point execute successfully.
-        seconds : Integer
-            The number of seconds to keey trying before letting the test continue
+        attempts : Integer
+            The number of attempts to keep trying before letting the test continue
 
         Returns the return value of the function we are trying.
         """
