@@ -23,10 +23,6 @@ To run all tests on Firefox
 ```
 python run.py
 ```
-To run all tests with headless mode to speed thing up a bit, although less reliable. This will not work with browserstack. Obviously, you will need to first install PhantomJs for this to work. You can use a mac with home brew.
-```
-python run.py --phantom
-```
 To override the base url you set in run.py
 ```
 python run.py --base_url "http://google.com"
