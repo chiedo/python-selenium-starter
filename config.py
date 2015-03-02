@@ -8,9 +8,6 @@ DEFAULT_BASE_URL = "http://www.google.com"  # Set this
 # The below tests IE8, IE9, IE10 and IE11 on windows and then chrome, safari and Firefox on a Mac. Pay attention to
 # the version numbers.
 DESKTOP_CAP_LIST_CONFIGS = [
-    {'browser': 'IE', 'browser_version': '8.0', 'os': 'Windows', 'os_version': '7', 'resolution': '1024x768'},
-    {'browser': 'IE', 'browser_version': '9.0', 'os': 'Windows', 'os_version': '7', 'resolution': '1024x768'},
-    {'browser': 'IE', 'browser_version': '10.0', 'os': 'Windows', 'os_version': '7', 'resolution': '1024x768'},
     {'browser': 'IE', 'browser_version': '11.0', 'os': 'Windows', 'os_version': '7', 'resolution': '1024x768'},
     {'browser': 'Chrome', 'browser_version': '39.0', 'os': 'OS X', 'os_version': 'Yosemite',
      'resolution': '1024x768'},
