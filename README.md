@@ -59,7 +59,7 @@ Open a tab and run the following to start the local testing server. That will ma
 ```
 Then Run the following to execute the tests and hook into the browser stack local testing server
 ```
-python run.py --use_local
+python run.py --browserstack --use_local
 ```
 
 Browserstack Examples
