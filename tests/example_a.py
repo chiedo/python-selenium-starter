@@ -14,7 +14,9 @@ class Test(BaseTest):
         self.driver.get(self.base_url)
         if "Google" not in self.driver.title:
             raise Exception("Unable to load google page!")
-        elem = self.driver.find_element_by_name("q")
+        # Wrapping any find element call with keep_trying, will make sure selenium keeps making a number of attempts
+        # to locate the element before giving up.
+        elem = self.keep_trying(lambda: self.driver.find_element_by_name("q"))
         elem.send_keys("BrowerStack")
         elem.submit()
         print self.driver.title

@@ -34,6 +34,26 @@ class BaseTest(object):
         self.driver.quit()
         exit()
 
+    def keep_trying(self, function, attempts=60):
+        """Continues to try the function without errors for a number of attempts before continuing. This solves
+        The problem of Selenium being inconsistent and erroring out because a browser is slow.
+
+        Parameters
+        ----------
+        assertion : lambda
+            A lambda function that should at some point execute successfully.
+        seconds : Integer
+            The number of seconds to keey trying before letting the test continue
+
+        Returns the return value of the function we are trying.
+        """
+        for i in xrange(attempts):
+            try:
+                return function()  # It will only return if the assertion does not throw an error
+            except:
+                pass
+            time.sleep(1)  # This makes the function wait a second between attempts
+
     def passed(self):
         """Print a generic message when a test has passed
         """
