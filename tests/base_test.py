@@ -36,7 +36,8 @@ class BaseTest(object):
 
     def keep_trying(self, function, attempts=60):
         """Continues to try the function without errors for a number of attempts before continuing. This solves
-        The problem of Selenium being inconsistent and erroring out because a browser is slow.
+        The problem of Selenium being inconsistent and erroring out because a browser is slow. Don't use if
+        you are expecting the function to return None.
 
         Parameters
         ----------
@@ -49,7 +50,8 @@ class BaseTest(object):
         """
         for i in xrange(attempts):
             try:
-                return function()  # It will only return if the assertion does not throw an error
+                result = function()
+                if(result is not None): return result  # It will only return if the assertion does not throw an error
             except:
                 pass
             time.sleep(1)  # This makes the function wait a second between attempts
