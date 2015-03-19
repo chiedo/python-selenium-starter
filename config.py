@@ -34,3 +34,8 @@ PROXY_BLACKLIST = [
     "(.)*\.jpeg.*",
     "(.)*\.gif.*",
 ]
+
+# Default PhantomJS args. These can be any PhantomJS compatible command line arguments
+PHANTOMJS_DEFAULTS = [
+    "--ignore-ssl-errors=true"
+]

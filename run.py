@@ -54,6 +54,10 @@ if(args.base_url is not None):
 else:
     BASE_URL = DEFAULT_BASE_URL
 
+# Set up phantom js default arguments if it's being used
+if(args.phantom):
+    phantomjs_args = PHANTOMJS_DEFAULTS
+
 # Set up the browsermob proxy if the argument is passed
 if(args.proxy):
     from browsermobproxy import Server
@@ -69,7 +73,7 @@ if(args.proxy):
 
     # Set up the needed arguments for either firefox or phantomjs
     if (args.phantom):
-        phantomjs_args = ["--proxy=%s" % (proxy_url)]
+        phantomjs_args.append("--proxy=%s" % (proxy_url))
     else:
         profile  = webdriver.FirefoxProfile()
         profile.set_proxy(proxy.selenium_proxy())
@@ -190,7 +194,7 @@ for desired_cap in desired_cap_list:
             # Defaults to firefox
             driver = webdriver.Firefox(firefox_profile=profile)
         elif(args.phantom):
-            driver = webdriver.PhantomJS()
+            driver = webdriver.PhantomJS(service_args=phantomjs_args)
             # With Phantom js, we need te set a specific window size to prevent certain tests from failing
             driver.set_window_size(1124, 850)
         else:
