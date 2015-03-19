@@ -92,10 +92,6 @@ To speed up your tests even more so, you can use browsermob-proxy to disable ima
 pip install browsermob-proxy
 ```
 - Set up your JAVA_HOME variable in your ~/.bashrc or ~/.bash_profile
-- To start your proxy, run the following (be patient, it is slow to start)
-```
-./browsermob-proxy/bin/browsermob-proxy
-```
 - Once you have done the above, you can run your tests through the proxy using the following and any other arguments you would like to use.
 ```
 python run.py --proxy

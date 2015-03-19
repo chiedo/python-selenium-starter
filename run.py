@@ -57,7 +57,7 @@ else:
 # Set up the browsermob proxy if the argument is passed
 if(args.proxy):
     from browsermobproxy import Server
-    path_to_bmp = os.path.abspath(os.path.join(os.path.dirname(__file__), "browsermob-proxy/bin"))
+    path_to_bmp = os.path.abspath(os.path.join(os.path.dirname(__file__), "browsermob-proxy-2.0.0/bin"))
     server = Server("%s/browsermob-proxy" % path_to_bmp)
     server.start()
     proxy = server.create_proxy()
