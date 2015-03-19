@@ -24,8 +24,9 @@ MOBILE_CAP_LIST_CONFIGS = [
     # {'browserName': 'android', 'platform': 'ANDROID', 'device': 'Samsung Galaxy S5'},
 ]
 
-# URLs to black list. This will speed up tests drastically. These are all regular expressions. Add other
-# URLs that you want to block. Will not work with browserstack.
+# URLs to black list. This will speed up tests drastically if you block certain external scripts that
+# are taking a while to run. These are all regular expressions. Add other URLs that you want to block.
+# Will not work with browserstack.
 PROXY_BLACKLIST = [
     # all images
     "(.)*\.jpg.*",

@@ -61,13 +61,18 @@ if(args.proxy):
     server = Server("%s/browsermob-proxy" % path_to_bmp)
     server.start()
     proxy = server.create_proxy()
+    proxy_url = proxy.webdriver_proxy().http_proxy
 
     # Set up the blacklist
     for regex in PROXY_BLACKLIST:
         proxy.blacklist(regex, 200)
 
-    profile  = webdriver.FirefoxProfile()
-    profile.set_proxy(proxy.selenium_proxy())
+    # Set up the needed arguments for either firefox or phantomjs
+    if (args.phantom):
+        phantomjs_args = ["--proxy=%s" % (proxy_url)]
+    else:
+        profile  = webdriver.FirefoxProfile()
+        profile.set_proxy(proxy.selenium_proxy())
 
 
 if(args.browserstack):
@@ -179,7 +184,10 @@ for desired_cap in desired_cap_list:
             desired_capabilities=desired_cap)
     # Otherwise, just run firefox locally.
     else:
-        if(args.proxy):
+        if(args.proxy and args.phantom):
+            driver = webdriver.PhantomJS(service_args=phantomjs_args)
+        elif(args.proxy):
+            # Defaults to firefox
             driver = webdriver.Firefox(firefox_profile=profile)
         elif(args.phantom):
             driver = webdriver.PhantomJS()
