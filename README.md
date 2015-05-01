@@ -23,10 +23,6 @@ To run all tests on Firefox
 ```
 python run.py
 ```
-To run all tests with headless mode to speed thing up a bit, although less reliable. This will not work with browserstack. Obviously, you will need to first install PhantomJs for this to work. You can use a mac with home brew.
-```
-python run.py --phantom
-```
 To override the base url you set in run.py
 ```
 python run.py --base_url "http://google.com"
@@ -40,8 +36,8 @@ To see more options
 python run.py --help
 ```
 
-Getting Started with Browserstack
-----------
+Browserstack options
+=========
 - Before anything, you need to get your Selenium automate username and automate value from the following URL.https://www.browserstack.com/accounts/automate
 - Once you have those values modify your ~/.bash_profile to end with the following. (use ~/.bashrc instead if on linux)
 ```
@@ -82,21 +78,3 @@ Browserstack Notes
 - For more browserstack options, you can see more details here https://www.browserstack.com/automate/python.
 - You will notice that your username and value are hard coded in those examples though. Just replace those areas with the environment variables we set up to make your code more shareable.
 - Local testing is VERY slow... Do as you wish
-
-
-Speeding up tests even further with browsermob (Will not work with browserstack... for obvious reasons)
------------
-To speed up your tests even more so, you can use browsermob-proxy to disable images and prevent the loading of other external resources.
-- Install browsermob-proxy with pip
-```
-pip install browsermob-proxy
-```
-- Set up your JAVA_HOME variable in your ~/.bashrc or ~/.bash_profile
-- Once you have done the above, you can run your tests through the proxy using the following and any other arguments you would like to use.
-```
-python run.py --proxy
-
-# or
-
-python run.py --proxy --phantom
-```
