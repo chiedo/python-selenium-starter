@@ -34,27 +34,34 @@ class BaseTest(object):
         self.driver.quit()
         exit()
 
-    def keep_trying(self, function, attempts=60):
+    def keep_trying(self, function, attempts=60, fallback=None, unsatisfactory=None):
         """Continues to try the function without errors for a number of attempts before continuing. This solves
-        The problem of Selenium being inconsistent and erroring out because a browser is slow. Don't use if
-        you are expecting the function to return None.
+        The problem of Selenium being inconsistent and erroring out because a browser is slow.
 
         Parameters
         ----------
-        function : lambda
+        assertion : lambda
             A lambda function that should at some point execute successfully.
         attempts : Integer
             The number of attempts to keep trying before letting the test continue
+        unsatisfactory : Any
+            Value that is unsatisfactory as a return value
+        fallback : Any
+            The fallback return value if the function did return a satisfactory value within the given
+            number of attempts.
 
         Returns the return value of the function we are trying.
         """
         for i in xrange(attempts):
             try:
                 result = function()
-                if(result is not None): return result  # It will only return if the assertion does not throw an error
+                # It will only return if the assertion does not throw an error
+                if(result is not unsatisfactory): return result
             except:
                 pass
             time.sleep(1)  # This makes the function wait a second between attempts
+
+        return fallback
 
     def passed(self):
         """Print a generic message when a test has passed
