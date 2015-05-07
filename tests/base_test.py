@@ -1,6 +1,7 @@
 """A test class for others to inherit to prevent duplicate code."""
 
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
 import time
 
 
@@ -21,6 +22,34 @@ class BaseTest(object):
         self.base_url = base_url
         self.module = module
         self.wait = WebDriverWait(driver, 10)
+
+    def confirm_in_url(self, path):
+        """Confirm the path appears in the URL
+
+        Parameters
+        -------------
+        path: string
+            The string that should appear in the URL
+        """
+        if(self.keep_trying(lambda: (True if path not in self.driver.current_url else False),
+           fallback=True, unsatisfactory=True)):
+            self.failed("We did not end up on the " + path + " page when we should have")
+
+    def confirm_in_page(self, text, page_class):
+        """Confirm the path appears in the URL
+
+        Parameters
+        -------------
+        text: string
+            The string that should appear in the page
+        page_class: string
+            The page class used for identifying the search area
+        """
+        page_wrap = self.keep_trying(lambda: self.driver.find_element(By.CLASS_NAME, page_class))
+
+        if(self.keep_trying(lambda: (True if text not in page_wrap.text else False),
+           fallback=True, unsatisfactory=True)):
+            self.failed(text + " did not appear in the page")
 
     def failed(self, error_message):
         """Print a generic message when a test has failed, take a screenshot and end the test.
